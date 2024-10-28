@@ -16,6 +16,30 @@ public class GenderPsaConfiguration : IEntityTypeConfiguration<GenderPsa>
         builder.Property(gp => gp.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(gp => gp.DeletedDate).HasColumnName("DeletedDate");
 
+        builder.HasData(_genders);
+
+
         builder.HasQueryFilter(gp => !gp.DeletedDate.HasValue);
     }
+
+    private IEnumerable<GenderPsa> _genders
+    {
+        get
+        {
+            yield return new GenderPsa
+            {
+                Id = GuidFinder.Male,
+                CreatedDate = DateTime.UtcNow,
+                Name = "Male"
+            };
+
+            yield return new GenderPsa
+            {
+                Id = GuidFinder.Female,
+                CreatedDate = DateTime.UtcNow,
+                Name = "Female"
+            };
+        }
+    }
+
 }

@@ -26,7 +26,8 @@ public class MappingProfiles : Profile
 
         CreateMap<Demo, GetByIdDemoResponse>();
 
-        CreateMap<Demo, GetDynamicListDemoListItemDto>();
+        CreateMap<Demo, GetDynamicListDemoListItemDto>()
+            .ForMember(dest => dest.ArtistToneCategoryId, opt => opt.MapFrom(src => src.Artist.ToneCategoryId));
         CreateMap<IPaginate<Demo>, GetListResponse<GetDynamicListDemoListItemDto>>();
 
         CreateMap<Demo, GetListDemoListItemDto>();

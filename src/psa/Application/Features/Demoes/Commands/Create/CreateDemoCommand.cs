@@ -1,4 +1,5 @@
 using Application.Features.Demoes.Rules;
+using Application.Services.Artists;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -31,6 +32,7 @@ public class CreateDemoCommand : IRequest<CreatedDemoResponse>
         public async Task<CreatedDemoResponse> Handle(CreateDemoCommand request, CancellationToken cancellationToken)
         {
             Demo demo = _mapper.Map<Demo>(request);
+
 
             await _demoRepository.AddAsync(demo);
 

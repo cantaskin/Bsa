@@ -1,4 +1,5 @@
 using Application.Features.Demoes.Rules;
+using Application.Services.Artists;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
@@ -26,7 +27,6 @@ public class UpdateDemoCommand : IRequest<UpdatedDemoResponse>
         {
             _mapper = mapper;
             _demoRepository = demoRepository;
-            _demoBusinessRules = demoBusinessRules;
         }
 
         public async Task<UpdatedDemoResponse> Handle(UpdateDemoCommand request, CancellationToken cancellationToken)
@@ -35,7 +35,6 @@ public class UpdateDemoCommand : IRequest<UpdatedDemoResponse>
             await _demoBusinessRules.DemoShouldExistWhenSelected(demo);
             demo = _mapper.Map(request, demo);
 
-            await _demoRepository.UpdateAsync(demo!);
 
             UpdatedDemoResponse response = _mapper.Map<UpdatedDemoResponse>(demo);
             return response;

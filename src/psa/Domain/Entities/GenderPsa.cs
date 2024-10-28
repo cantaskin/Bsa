@@ -11,4 +11,5 @@ public class GenderPsa : Entity<Guid>
     public string Name { get; set; }
 
     public ICollection<Artist>?  Artists { get; set; }
+
 }

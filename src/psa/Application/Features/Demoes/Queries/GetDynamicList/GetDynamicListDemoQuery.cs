@@ -1,9 +1,11 @@
 using Application.Features.Demoes.Queries.GetList;
+using Application.Services.Artists;
 using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Dynamic;
@@ -18,19 +20,22 @@ public class GetDynamicListDemoQuery : IRequest<GetListResponse<GetDynamicListDe
     public class GetDynamicListDemoQueryHandler : IRequestHandler<GetDynamicListDemoQuery, GetListResponse<GetDynamicListDemoListItemDto>>
     {
         private readonly IDemoRepository _demoRepository;
+        private readonly IArtistRepository _artistRepository;
         private readonly IMapper _mapper;
 
-        public GetDynamicListDemoQueryHandler(IDemoRepository demoRepository, IMapper mapper)
+        public GetDynamicListDemoQueryHandler(IDemoRepository demoRepository, IMapper mapper, IArtistRepository artistRepository)
         {
             _demoRepository = demoRepository;
             _mapper = mapper;
+            _artistRepository = artistRepository;
         }
 
         public async Task<GetListResponse<GetDynamicListDemoListItemDto>> Handle(GetDynamicListDemoQuery request, CancellationToken cancellationToken)
         {
+
             IPaginate<Demo> demoes = await _demoRepository.GetListByDynamicAsync(
                 request.DynamicQuery,
-                include: query => query.Include(d => d.Artist),
+                include: demo => demo.Include(d => d.Artist),
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize
             );

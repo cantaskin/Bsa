@@ -9,4 +9,5 @@ public class GetDynamicListDemoListItemDto : IDto
     public string Url { get; set; }
     public Guid LanguageId { get; set; }
     public Guid CategoryId { get; set; }
+    public Guid ArtistToneCategoryId { get; set; }
 }

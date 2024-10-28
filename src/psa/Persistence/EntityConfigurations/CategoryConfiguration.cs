@@ -16,6 +16,44 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
         builder.Property(c => c.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(c => c.DeletedDate).HasColumnName("DeletedDate");
 
+        builder.HasData(_categories);
         builder.HasQueryFilter(c => !c.DeletedDate.HasValue);
     }
+
+    private IEnumerable<Category> _categories
+    {
+        get
+        {
+            yield return new Category
+            {
+                Id = GuidFinder.Documentary,
+                Name = "Documentary"
+            };
+
+            yield return new Category
+            {
+                Id = GuidFinder.Jingle,
+                Name = "Jingle"
+            };
+
+            yield return new Category
+            {
+                Id = GuidFinder.Dubbing,
+                Name = "Dubbing"
+            };
+
+            yield return new Category
+            {
+                Id = GuidFinder.Advertising,
+                Name = "Advertisement"
+            };
+
+            yield return new Category
+            {
+                Id = GuidFinder.Central,
+                Name = "Central"
+            };
+        }
+    }
+
 }
