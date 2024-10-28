@@ -20,6 +20,8 @@ public class DemoConfiguration : IEntityTypeConfiguration<Demo>
         builder.Property(d => d.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(d => d.DeletedDate).HasColumnName("DeletedDate");
 
+        builder.HasOne(d => d.Category).WithMany(c => c.Demos).HasForeignKey(d => d.CategoryId);
+
         builder.HasQueryFilter(d => !d.DeletedDate.HasValue);
     }
 }

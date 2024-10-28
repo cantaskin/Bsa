@@ -19,6 +19,8 @@ public class UpdateArtistCommand : IRequest<UpdatedArtistResponse>
     public required Guid ToneCategoryId { get; set; }
     public required Guid GenderPsaId { get; set; }
 
+    public required ICollection<Guid> LanguageIds { get; set; }
+
     public class UpdateArtistCommandHandler : IRequestHandler<UpdateArtistCommand, UpdatedArtistResponse>
     {
         private readonly IMapper _mapper;

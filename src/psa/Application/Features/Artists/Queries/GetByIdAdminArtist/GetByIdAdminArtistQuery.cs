@@ -34,7 +34,7 @@ public class GetByIdAdminArtistQuery : IRequest<GetByIdAdminArtistResponse>
 
             
             GetByIdAdminArtistResponse response = _mapper.Map<GetByIdAdminArtistResponse>(artist);
-            
+            response.GenderId = artist.GenderPsaId;
             response.DemoIds = _artistService.GetIdsFromCollection(artist.Demos);
             response.LanguagesIds = _artistService.GetIdsFromCollection(artist.Languages);
 

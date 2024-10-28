@@ -14,4 +14,5 @@ public class UpdatedArtistResponse : IResponse
     public float RealVoiceStampPrice { get; set; }
     public Guid ToneCategoryId { get; set; }
     public Guid GenderId { get; set; }
+    public  ICollection<Guid> LanguageIds { get; set; }
 }

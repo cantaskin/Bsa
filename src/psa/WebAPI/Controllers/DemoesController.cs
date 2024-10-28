@@ -7,6 +7,7 @@ using Application.Features.Demoes.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using Microsoft.AspNetCore.Mvc;
+using NArchitecture.Core.Persistence.Dynamic;
 
 namespace WebAPI.Controllers;
 
@@ -51,12 +52,19 @@ public class DemoesController : BaseController
     }
 
     [HttpGet]
-    public async Task<ActionResult<GetDynamicListDemoQuery>> GetList([FromQuery] PageRequest pageRequest)
+    public async Task<ActionResult<GetListDemoQuery>> GetList([FromQuery] PageRequest pageRequest)
     {
-        GetDynamicListDemoQuery query = new() { PageRequest = pageRequest };
+        GetListDemoQuery query = new() { PageRequest = pageRequest };
 
+        GetListResponse<GetListDemoListItemDto> response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+
+    [HttpGet("dynamicquery")]
+    public async Task<ActionResult<GetDynamicListDemoQuery>> GetDynamicList([FromQuery] GetDynamicListDemoQuery query)
+    {
         GetListResponse<GetDynamicListDemoListItemDto> response = await Mediator.Send(query);
-
         return Ok(response);
     }
 }

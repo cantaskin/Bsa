@@ -3,6 +3,7 @@ using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Dynamic;
@@ -29,6 +30,7 @@ public class GetDynamicListDemoQuery : IRequest<GetListResponse<GetDynamicListDe
         {
             IPaginate<Demo> demoes = await _demoRepository.GetListByDynamicAsync(
                 request.DynamicQuery,
+                include: query => query.Include(d => d.Artist),
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize
             );

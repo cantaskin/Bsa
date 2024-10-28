@@ -12,8 +12,8 @@ using Persistence.Contexts;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(BaseDbContext))]
-    [Migration("20241026202337_DemoEntityUpdated")]
-    partial class DemoEntityUpdated
+    [Migration("20241027133322_First")]
+    partial class First
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -46,9 +46,6 @@ namespace Persistence.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("Id");
-
-                    b.Property<Guid?>("CategoryId")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2")
@@ -102,8 +99,6 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
-
                     b.HasIndex("GenderPsaId");
 
                     b.HasIndex("ToneCategoryId");
@@ -151,6 +146,10 @@ namespace Persistence.Migrations
                         .HasColumnType("uniqueidentifier")
                         .HasColumnName("ArtistId");
 
+                    b.Property<Guid>("CategoryId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CategoryId");
+
                     b.Property<DateTime>("CreatedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("CreatedDate");
@@ -180,6 +179,8 @@ namespace Persistence.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("ArtistId");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("LanguageId");
 
@@ -883,12 +884,12 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c8430950-8f3e-40a0-84a6-c0a560295531"),
+                            Id = new Guid("f281a14c-f286-432e-ba67-b97d3b3416df"),
                             AuthenticatorType = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             Email = "narch@kodlama.io",
-                            PasswordHash = new byte[] { 155, 196, 41, 55, 241, 145, 153, 150, 220, 171, 157, 50, 183, 167, 4, 106, 33, 194, 79, 43, 217, 224, 144, 45, 37, 178, 4, 233, 237, 235, 237, 97, 189, 177, 35, 192, 121, 44, 83, 125, 132, 60, 212, 249, 141, 200, 95, 82, 57, 79, 57, 140, 130, 101, 21, 63, 110, 148, 62, 239, 76, 122, 50, 93 },
-                            PasswordSalt = new byte[] { 103, 157, 49, 132, 199, 124, 230, 42, 42, 146, 217, 132, 223, 235, 254, 63, 108, 137, 211, 167, 84, 8, 116, 68, 34, 192, 75, 221, 250, 233, 85, 183, 21, 111, 166, 4, 158, 10, 139, 247, 203, 224, 41, 154, 254, 69, 142, 90, 67, 11, 69, 225, 185, 101, 158, 90, 232, 214, 251, 71, 0, 189, 236, 127, 161, 65, 244, 224, 182, 173, 117, 249, 242, 247, 60, 176, 1, 183, 86, 105, 235, 232, 63, 77, 49, 65, 72, 171, 204, 57, 243, 249, 66, 226, 251, 79, 109, 186, 145, 157, 118, 187, 172, 35, 254, 111, 39, 95, 216, 127, 74, 52, 68, 231, 89, 24, 192, 17, 253, 150, 182, 129, 108, 191, 151, 107, 61, 109 },
+                            PasswordHash = new byte[] { 175, 138, 12, 48, 71, 227, 67, 24, 83, 224, 124, 124, 248, 80, 123, 129, 110, 219, 89, 191, 123, 76, 30, 90, 183, 193, 89, 24, 3, 115, 106, 214, 3, 250, 51, 200, 71, 217, 137, 230, 71, 198, 247, 215, 66, 179, 217, 60, 220, 133, 83, 203, 102, 27, 205, 97, 147, 77, 23, 245, 139, 31, 99, 128 },
+                            PasswordSalt = new byte[] { 23, 156, 67, 203, 51, 183, 11, 59, 18, 135, 203, 145, 243, 121, 67, 130, 74, 240, 128, 37, 106, 218, 81, 248, 208, 65, 222, 61, 173, 15, 218, 16, 110, 29, 165, 98, 132, 59, 31, 74, 247, 202, 159, 9, 93, 229, 175, 131, 188, 112, 162, 139, 8, 239, 31, 161, 4, 242, 132, 113, 155, 88, 205, 109, 135, 219, 45, 121, 198, 175, 174, 7, 181, 206, 228, 238, 199, 16, 70, 10, 137, 150, 85, 170, 13, 17, 10, 185, 218, 126, 71, 31, 158, 82, 153, 27, 113, 45, 113, 69, 103, 50, 171, 63, 15, 140, 66, 219, 205, 208, 108, 168, 128, 15, 197, 213, 4, 75, 103, 245, 36, 118, 151, 187, 190, 0, 26, 149 },
                             UserName = ""
                         });
                 });
@@ -931,10 +932,10 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("48092d3b-2319-46da-adfd-c788fa706fea"),
+                            Id = new Guid("8ee703c6-071c-4122-abc4-78957771dc2d"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OperationClaimId = 1,
-                            UserId = new Guid("c8430950-8f3e-40a0-84a6-c0a560295531")
+                            UserId = new Guid("f281a14c-f286-432e-ba67-b97d3b3416df")
                         });
                 });
 
@@ -955,10 +956,6 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Artist", b =>
                 {
-                    b.HasOne("Domain.Entities.Category", null)
-                        .WithMany("Artists")
-                        .HasForeignKey("CategoryId");
-
                     b.HasOne("Domain.Entities.GenderPsa", "GenderPsa")
                         .WithMany("Artists")
                         .HasForeignKey("GenderPsaId")
@@ -979,8 +976,14 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Entities.Demo", b =>
                 {
                     b.HasOne("Domain.Entities.Artist", "Artist")
-                        .WithMany()
+                        .WithMany("Demos")
                         .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Category", "Category")
+                        .WithMany("Demos")
+                        .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -991,6 +994,8 @@ namespace Persistence.Migrations
                         .IsRequired();
 
                     b.Navigation("Artist");
+
+                    b.Navigation("Category");
 
                     b.Navigation("Language");
                 });
@@ -1047,9 +1052,14 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.Artist", b =>
+                {
+                    b.Navigation("Demos");
+                });
+
             modelBuilder.Entity("Domain.Entities.Category", b =>
                 {
-                    b.Navigation("Artists");
+                    b.Navigation("Demos");
                 });
 
             modelBuilder.Entity("Domain.Entities.GenderPsa", b =>

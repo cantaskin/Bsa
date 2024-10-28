@@ -28,5 +28,9 @@ public class MappingProfiles : Profile
 
         CreateMap<Demo, GetDynamicListDemoListItemDto>();
         CreateMap<IPaginate<Demo>, GetListResponse<GetDynamicListDemoListItemDto>>();
+
+        CreateMap<Demo, GetListDemoListItemDto>();
+        CreateMap<IPaginate<Demo>, GetListResponse<GetListDemoListItemDto>>();
+
     }
 }

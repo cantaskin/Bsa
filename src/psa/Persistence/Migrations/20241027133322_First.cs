@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class FirstMigration : Migration
+    public partial class First : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -109,29 +109,6 @@ namespace Persistence.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Demoes",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Demoes", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Demoes_Languages_LanguageId",
-                        column: x => x.LanguageId,
-                        principalTable: "Languages",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Artists",
                 columns: table => new
                 {
@@ -145,7 +122,6 @@ namespace Persistence.Migrations
                     RealVoiceStampPrice = table.Column<float>(type: "real", nullable: false),
                     ToneCategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     GenderPsaId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
                     DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
@@ -153,11 +129,6 @@ namespace Persistence.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Artists", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Artists_Categories_CategoryId",
-                        column: x => x.CategoryId,
-                        principalTable: "Categories",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Artists_GenderPsas_GenderPsaId",
                         column: x => x.GenderPsaId,
@@ -298,6 +269,43 @@ namespace Persistence.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "Demoes",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Url = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    LanguageId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ArtistId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedDate = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    UpdatedDate = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    DeletedDate = table.Column<DateTime>(type: "datetime2", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Demoes", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Demoes_Artists_ArtistId",
+                        column: x => x.ArtistId,
+                        principalTable: "Artists",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Demoes_Categories_CategoryId",
+                        column: x => x.CategoryId,
+                        principalTable: "Categories",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Demoes_Languages_LanguageId",
+                        column: x => x.LanguageId,
+                        principalTable: "Languages",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.InsertData(
                 table: "OperationClaims",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "Name", "UpdatedDate" },
@@ -373,22 +381,17 @@ namespace Persistence.Migrations
             migrationBuilder.InsertData(
                 table: "Users",
                 columns: new[] { "Id", "AuthenticatorType", "CreatedDate", "DeletedDate", "Email", "PasswordHash", "PasswordSalt", "UpdatedDate", "UserName" },
-                values: new object[] { new Guid("1957e2f1-b416-4bd2-9ad6-7b6f5aada81b"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 62, 46, 2, 243, 110, 149, 84, 146, 186, 11, 197, 241, 117, 106, 243, 160, 8, 101, 231, 50, 142, 19, 102, 205, 190, 90, 45, 166, 190, 115, 204, 161, 84, 61, 58, 198, 107, 174, 14, 95, 144, 38, 81, 106, 99, 250, 12, 152, 23, 172, 211, 33, 175, 161, 159, 233, 167, 114, 164, 84, 153, 53, 235, 121 }, new byte[] { 178, 235, 164, 84, 191, 132, 236, 214, 137, 63, 2, 47, 127, 213, 134, 233, 84, 8, 89, 48, 55, 237, 170, 216, 199, 30, 91, 179, 209, 196, 128, 129, 149, 166, 184, 27, 226, 158, 84, 92, 80, 141, 141, 69, 140, 114, 130, 236, 111, 137, 215, 193, 132, 124, 9, 137, 131, 177, 90, 101, 37, 184, 2, 94, 74, 184, 253, 17, 162, 250, 68, 140, 13, 66, 32, 57, 99, 101, 162, 84, 158, 72, 63, 159, 41, 157, 157, 213, 165, 16, 78, 246, 39, 90, 57, 130, 143, 212, 91, 245, 203, 117, 9, 171, 128, 124, 156, 251, 99, 46, 114, 97, 158, 25, 88, 160, 2, 220, 151, 155, 202, 247, 115, 70, 51, 188, 239, 19 }, null, "" });
+                values: new object[] { new Guid("f281a14c-f286-432e-ba67-b97d3b3416df"), 0, new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, "narch@kodlama.io", new byte[] { 175, 138, 12, 48, 71, 227, 67, 24, 83, 224, 124, 124, 248, 80, 123, 129, 110, 219, 89, 191, 123, 76, 30, 90, 183, 193, 89, 24, 3, 115, 106, 214, 3, 250, 51, 200, 71, 217, 137, 230, 71, 198, 247, 215, 66, 179, 217, 60, 220, 133, 83, 203, 102, 27, 205, 97, 147, 77, 23, 245, 139, 31, 99, 128 }, new byte[] { 23, 156, 67, 203, 51, 183, 11, 59, 18, 135, 203, 145, 243, 121, 67, 130, 74, 240, 128, 37, 106, 218, 81, 248, 208, 65, 222, 61, 173, 15, 218, 16, 110, 29, 165, 98, 132, 59, 31, 74, 247, 202, 159, 9, 93, 229, 175, 131, 188, 112, 162, 139, 8, 239, 31, 161, 4, 242, 132, 113, 155, 88, 205, 109, 135, 219, 45, 121, 198, 175, 174, 7, 181, 206, 228, 238, 199, 16, 70, 10, 137, 150, 85, 170, 13, 17, 10, 185, 218, 126, 71, 31, 158, 82, 153, 27, 113, 45, 113, 69, 103, 50, 171, 63, 15, 140, 66, 219, 205, 208, 108, 168, 128, 15, 197, 213, 4, 75, 103, 245, 36, 118, 151, 187, 190, 0, 26, 149 }, null, "" });
 
             migrationBuilder.InsertData(
                 table: "UserOperationClaims",
                 columns: new[] { "Id", "CreatedDate", "DeletedDate", "OperationClaimId", "UpdatedDate", "UserId" },
-                values: new object[] { new Guid("b4359a99-364d-4c47-94b5-5f5b98e0f199"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("1957e2f1-b416-4bd2-9ad6-7b6f5aada81b") });
+                values: new object[] { new Guid("8ee703c6-071c-4122-abc4-78957771dc2d"), new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), null, 1, null, new Guid("f281a14c-f286-432e-ba67-b97d3b3416df") });
 
             migrationBuilder.CreateIndex(
                 name: "IX_ArtistLanguage_LanguagesId",
                 table: "ArtistLanguage",
                 column: "LanguagesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Artists_CategoryId",
-                table: "Artists",
-                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Artists_GenderPsaId",
@@ -399,6 +402,16 @@ namespace Persistence.Migrations
                 name: "IX_Artists_ToneCategoryId",
                 table: "Artists",
                 column: "ToneCategoryId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Demoes_ArtistId",
+                table: "Demoes",
+                column: "ArtistId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Demoes_CategoryId",
+                table: "Demoes",
+                column: "CategoryId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Demoes_LanguageId",
@@ -456,6 +469,9 @@ namespace Persistence.Migrations
                 name: "Artists");
 
             migrationBuilder.DropTable(
+                name: "Categories");
+
+            migrationBuilder.DropTable(
                 name: "Languages");
 
             migrationBuilder.DropTable(
@@ -463,9 +479,6 @@ namespace Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "Categories");
 
             migrationBuilder.DropTable(
                 name: "GenderPsas");
