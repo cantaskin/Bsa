@@ -2,6 +2,7 @@ using Application.Features.Artists.Commands.Create;
 using Application.Features.Artists.Commands.Delete;
 using Application.Features.Artists.Commands.Update;
 using Application.Features.Artists.Queries.GetByIdAdminArtist;
+using Application.Features.Artists.Queries.GetDynamicList;
 using Application.Features.Artists.Queries.GetList;
 using AutoMapper;
 using NArchitecture.Core.Application.Responses;
@@ -27,5 +28,9 @@ public class MappingProfiles : Profile
 
         CreateMap<Artist, GetListArtistListItemDto>();
         CreateMap<IPaginate<Artist>, GetListResponse<GetListArtistListItemDto>>();
+
+        CreateMap<Artist, GetDynamicListArtistListItemDto>();
+        CreateMap<IPaginate<Artist>, GetListResponse<GetDynamicListArtistListItemDto>>();
+
     }
 }

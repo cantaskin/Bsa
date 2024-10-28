@@ -2,6 +2,8 @@ using Application.Features.Artists.Commands.Create;
 using Application.Features.Artists.Commands.Delete;
 using Application.Features.Artists.Commands.Update;
 using Application.Features.Artists.Queries.GetByIdAdminArtist;
+using Application.Features.Artists.Queries.GetByIdArtist;
+using Application.Features.Artists.Queries.GetDynamicList;
 using Application.Features.Artists.Queries.GetList;
 using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
@@ -39,12 +41,22 @@ public class ArtistsController : BaseController
         return Ok(response);
     }
 
-    [HttpGet("{id}")]
-    public async Task<ActionResult<GetByIdAdminArtistResponse>> GetById([FromRoute] Guid id)
+    [HttpGet("admin/{id}")]
+    public async Task<ActionResult<GetByIdAdminArtistResponse>> GetByAdminId([FromRoute] Guid id)
     {
         GetByIdAdminArtistQuery query = new() { Id = id };
 
         GetByIdAdminArtistResponse response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<GetByIdArtistResponse>> GetById([FromRoute] Guid id)
+    {
+        GetByIdArtistQuery query = new() { Id = id };
+
+        GetByIdArtistResponse response = await Mediator.Send(query);
 
         return Ok(response);
     }
@@ -55,6 +67,15 @@ public class ArtistsController : BaseController
         GetListArtistQuery query = new() { PageRequest = pageRequest };
 
         GetListResponse<GetListArtistListItemDto> response = await Mediator.Send(query);
+
+        return Ok(response);
+    }
+
+    [HttpGet("dynamicquery")]
+    public async Task<ActionResult<GetDynamicListArtistQuery>> GetDynamicList([FromQuery] GetDynamicListArtistQuery query )
+    {
+
+        GetListResponse<GetDynamicListArtistListItemDto> response = await Mediator.Send(query);
 
         return Ok(response);
     }
