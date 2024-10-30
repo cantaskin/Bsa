@@ -24,13 +24,23 @@ public class MappingProfiles : Profile
         CreateMap<DeleteDemoCommand, Demo>();
         CreateMap<Demo, DeletedDemoResponse>();
 
-        CreateMap<Demo, GetByIdDemoResponse>();
+        CreateMap<Demo, GetByIdDemoResponse>()
+            .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(src => src.Language.Name))
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(src => src.Category.Name))
+            .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Artist.UserName));
 
         CreateMap<Demo, GetDynamicListDemoListItemDto>()
-            .ForMember(dest => dest.ArtistToneCategoryId, opt => opt.MapFrom(src => src.Artist.ToneCategoryId));
+            .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Artist.UserName))
+            .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(demo => demo.Language.Name))
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(demo => demo.Category.Name));
+
         CreateMap<IPaginate<Demo>, GetListResponse<GetDynamicListDemoListItemDto>>();
 
-        CreateMap<Demo, GetListDemoListItemDto>();
+        CreateMap<Demo, GetListDemoListItemDto>()
+            .ForMember(dest => dest.ArtistName, opt => opt.MapFrom(src => src.Artist.UserName))
+            .ForMember(dest => dest.LanguageName, opt => opt.MapFrom(demo => demo.Language.Name))
+            .ForMember(dest => dest.CategoryName, opt => opt.MapFrom(demo => demo.Category.Name));
+
         CreateMap<IPaginate<Demo>, GetListResponse<GetListDemoListItemDto>>();
 
     }

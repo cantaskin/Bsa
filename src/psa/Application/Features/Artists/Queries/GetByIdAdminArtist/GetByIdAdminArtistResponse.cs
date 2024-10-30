@@ -12,8 +12,8 @@ public class GetByIdAdminArtistResponse : IResponse
     public float InstAiUnitPrice { get; set; }
     public float ProfAiUnitPrice { get; set; }
     public float RealVoiceStampPrice { get; set; }
-    public Guid ToneCategoryId { get; set; }
-    public Guid GenderId { get; set; }
+    public string ToneCategoryName { get; set; }
+    public string GenderName { get; set; }
     public ICollection<Guid> DemoIds { get; set; }
-    public ICollection<Guid> LanguagesIds { get; set; }
+    public ICollection<string> LanguageNames { get; set; }
 }

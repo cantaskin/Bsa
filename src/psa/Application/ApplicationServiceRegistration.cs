@@ -26,6 +26,7 @@ using Application.Services.Demoes;
 using Application.Services.Languages;
 using Application.Services.ToneCategories;
 using Application.Services.GenderPsas;
+using Application.Services.MailService;
 
 namespace Application;
 
@@ -62,6 +63,7 @@ public static class ApplicationServiceRegistration
         services.AddScoped<IAuthService, AuthManager>();
         services.AddScoped<IAuthenticatorService, AuthenticatorManager>();
         services.AddScoped<IUserService, UserManager>();
+        
 
         services.AddYamlResourceLocalization();
 

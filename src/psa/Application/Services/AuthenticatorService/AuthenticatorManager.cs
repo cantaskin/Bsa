@@ -1,4 +1,5 @@
-﻿using Application.Services.Repositories;
+﻿using Application.Services.MailService;
+using Application.Services.Repositories;
 using Domain.Entities;
 using MimeKit;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
@@ -13,21 +14,21 @@ public class AuthenticatorManager : IAuthenticatorService
 {
     private readonly IEmailAuthenticatorHelper _emailAuthenticatorHelper;
     private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
-    private readonly IMailService _mailService;
+    private readonly IEMailService _emailService;
     private readonly IOtpAuthenticatorHelper _otpAuthenticatorHelper;
     private readonly IOtpAuthenticatorRepository _otpAuthenticatorRepository;
 
     public AuthenticatorManager(
         IEmailAuthenticatorHelper emailAuthenticatorHelper,
         IEmailAuthenticatorRepository emailAuthenticatorRepository,
-        IMailService mailService,
+        IEMailService emailService,
         IOtpAuthenticatorHelper otpAuthenticatorHelper,
         IOtpAuthenticatorRepository otpAuthenticatorRepository
     )
     {
         _emailAuthenticatorHelper = emailAuthenticatorHelper;
         _emailAuthenticatorRepository = emailAuthenticatorRepository;
-        _mailService = mailService;
+        _emailService = emailService;
         _otpAuthenticatorHelper = otpAuthenticatorHelper;
         _otpAuthenticatorRepository = otpAuthenticatorRepository;
     }
@@ -92,13 +93,13 @@ public class AuthenticatorManager : IAuthenticatorService
 
         var toEmailList = new List<MailboxAddress> { new(name: user.Email, address: user.Email) };
 
-        _mailService.SendMail(
+        await _emailService.SendEmailAsync(
             new Mail
             {
                 ToList = toEmailList,
-                Subject = "Authenticator Code - NArchitecture",
-                TextBody = $"Enter your authenticator code: {authenticatorCode}"
-            }
+                Subject = "Authenticator Code - Bibersa",
+                HtmlBody = $"Enter your authenticator code: {authenticatorCode}"
+            },false
         );
     }
 

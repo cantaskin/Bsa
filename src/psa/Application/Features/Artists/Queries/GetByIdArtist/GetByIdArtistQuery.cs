@@ -29,14 +29,18 @@ public class GetByIdArtistQuery : IRequest<GetByIdArtistResponse>
 
         public async Task<GetByIdArtistResponse> Handle(GetByIdArtistQuery request, CancellationToken cancellationToken)
         {
-            Artist? artist = await _artistRepository.GetAsync(predicate: a => a.Id == request.Id,include:query => query.Include(a => a.Languages).Include(a => a.Demos), cancellationToken: cancellationToken);
+            Artist? artist = await _artistRepository.GetAsync(predicate: a => a.Id == request.Id,
+                include:query => query.Include(a => a.Languages).
+                    Include(a => a.GenderPsa)
+                    .Include(artist => artist.Demos)
+                    .Include(artist => artist.ToneCategory), 
+                cancellationToken: cancellationToken);
             await _artistBusinessRules.ArtistShouldExistWhenSelected(artist);
 
             
             GetByIdArtistResponse response = _mapper.Map<GetByIdArtistResponse>(artist);
-            response.GenderId = artist.GenderPsaId;
-            response.DemoIds = _artistService.GetIdsFromCollection(artist.Demos);
-            response.LanguagesIds = _artistService.GetIdsFromCollection(artist.Languages);
+          //  response.DemoIds = _artistService.GetIdsFromCollection(artist.Demos);
+           // response.LanguagesIds = _artistService.GetIdsFromCollection(artist.Languages);
 
             return response;
         }

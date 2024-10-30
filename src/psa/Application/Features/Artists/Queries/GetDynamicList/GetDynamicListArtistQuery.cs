@@ -7,6 +7,8 @@ using NArchitecture.Core.Persistence.Paging;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Application.Services.Artists;
+using MimeKit;
+using NArchitecture.Core.Mailing;
 using NArchitecture.Core.Persistence.Dynamic;
 
 namespace Application.Features.Artists.Queries.GetDynamicList;
@@ -22,7 +24,6 @@ public class GetDynamicListArtistQuery: IRequest<GetListResponse<GetDynamicListA
         private readonly IArtistRepository _artistRepository;
         private readonly IArtistService _artistService;
         private readonly IMapper _mapper;
-
         public GetDynamicListArtistQueryHandler(IArtistRepository artistRepository, IMapper mapper, IArtistService artistService)
         {
             _artistRepository = artistRepository;
@@ -32,6 +33,7 @@ public class GetDynamicListArtistQuery: IRequest<GetListResponse<GetDynamicListA
 
         public async Task<GetListResponse<GetDynamicListArtistListItemDto>> Handle(GetDynamicListArtistQuery request, CancellationToken cancellationToken)
         {
+            
             IPaginate<Artist> artists = await _artistRepository.GetListByDynamicAsync(
                 dynamic: request.DynamicQuery,
                 index: request.PageRequest.PageIndex,

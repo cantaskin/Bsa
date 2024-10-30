@@ -1,0 +1,12 @@
+﻿using NArchitecture.Core.Mailing;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Application.Services.MailService;
+public  interface IEMailService
+{
+    Task SendEmailAsync(Mail mail,bool isHtml = true);
+}

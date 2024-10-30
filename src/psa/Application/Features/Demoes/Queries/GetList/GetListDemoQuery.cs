@@ -5,6 +5,7 @@ using NArchitecture.Core.Application.Requests;
 using NArchitecture.Core.Application.Responses;
 using NArchitecture.Core.Persistence.Paging;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Demoes.Queries.GetList;
 
@@ -28,6 +29,9 @@ public class GetListDemoQuery : IRequest<GetListResponse<GetListDemoListItemDto>
             IPaginate<Demo> demoes = await _demoRepository.GetListAsync(
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize, 
+                include: q => q.Include(demo => demo.Artist)
+                    .Include(demo => demo.Category)
+                    .Include(demo => demo.Language),
                 cancellationToken: cancellationToken
             );
 

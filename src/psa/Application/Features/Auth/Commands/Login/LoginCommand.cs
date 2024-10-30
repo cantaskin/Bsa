@@ -1,6 +1,7 @@
 ﻿using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
+using Application.Services.Repositories;
 using Application.Services.UsersService;
 using Domain.Entities;
 using MediatR;
@@ -33,18 +34,19 @@ public class LoginCommand : IRequest<LoggedResponse>
         private readonly IAuthenticatorService _authenticatorService;
         private readonly IAuthService _authService;
         private readonly IUserService _userService;
+        private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
 
         public LoginCommandHandler(
             IUserService userService,
             IAuthService authService,
             AuthBusinessRules authBusinessRules,
-            IAuthenticatorService authenticatorService
-        )
+            IAuthenticatorService authenticatorService, IEmailAuthenticatorRepository emailAuthenticatorRepository)
         {
             _userService = userService;
             _authService = authService;
             _authBusinessRules = authBusinessRules;
             _authenticatorService = authenticatorService;
+            _emailAuthenticatorRepository = emailAuthenticatorRepository;
         }
 
         public async Task<LoggedResponse> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -56,6 +58,13 @@ public class LoginCommand : IRequest<LoggedResponse>
             await _authBusinessRules.UserShouldBeExistsWhenSelected(user);
             await _authBusinessRules.UserPasswordShouldBeMatch(user!, request.UserForLoginDto.Password);
 
+
+            EmailAuthenticator? emailAuthenticator = await _emailAuthenticatorRepository.GetAsync(ea => ea.UserId == user.Id);
+            if (emailAuthenticator == null || emailAuthenticator.IsVerified != true)
+            {
+                throw new Exception("Your account need to verified!");
+            }
+            
             LoggedResponse loggedResponse = new();
 
             if (user!.AuthenticatorType is not AuthenticatorType.None)

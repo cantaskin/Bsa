@@ -35,7 +35,9 @@ public class GetDynamicListDemoQuery : IRequest<GetListResponse<GetDynamicListDe
 
             IPaginate<Demo> demoes = await _demoRepository.GetListByDynamicAsync(
                 request.DynamicQuery,
-                include: demo => demo.Include(d => d.Artist),
+                include: demo => demo.Include(d => d.Artist)
+                    .Include(demo => demo.Category)
+                    .Include(demo => demo.Language),
                 index: request.PageRequest.PageIndex,
                 size: request.PageRequest.PageSize
             );

@@ -9,7 +9,7 @@ using System.Collections.ObjectModel;
 
 namespace Application.Features.Artists.Commands.Create;
 
-public class CreateArtistCommand : IRequest<CreatedArtistResponse>
+public class CreateArtistCommand : IRequest<CreatedArtistResponse> 
 {
     public required string UserName { get; set; }
     public string? PhotoUrl { get; set; }

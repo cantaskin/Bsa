@@ -1,4 +1,5 @@
 using Application;
+using FluentEmail.Smtp;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
@@ -14,6 +15,8 @@ using NArchitecture.Core.Security.JWT;
 using NArchitecture.Core.Security.WebApi.Swagger.Extensions;
 using Persistence;
 using Swashbuckle.AspNetCore.SwaggerUI;
+using System.Net;
+using System.Net.Mail;
 using WebAPI;
 
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
@@ -64,6 +67,9 @@ builder.Services.AddCors(opt =>
         p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader();
     })
 );
+var smtpSettings =
+    builder.Configuration.GetSection("SmtpSettings").Get<SmtpSettings>();
+
 builder.Services.AddSwaggerGen(opt =>
 {
     opt.AddSecurityDefinition(
@@ -82,6 +88,16 @@ builder.Services.AddSwaggerGen(opt =>
     );
     opt.OperationFilter<BearerSecurityRequirementOperationFilter>();
 });
+
+builder.Services.AddFluentEmail(smtpSettings.FromEmail, smtpSettings.FromName)
+    .AddRazorRenderer()
+    .AddSmtpSender(new SmtpClient(smtpSettings.Host)
+    {
+        Port = Convert.ToInt32(smtpSettings.Port),
+        Credentials = new System.Net.NetworkCredential(smtpSettings.UserName,
+            smtpSettings.Password),
+        EnableSsl = true,
+    });
 
 WebApplication app = builder.Build();
 
@@ -114,3 +130,14 @@ app.UseCors(opt => opt.WithOrigins(webApiConfiguration.AllowedOrigins).AllowAnyH
 app.UseResponseLocalization();
 
 app.Run();
+
+
+public  class SmtpSettings
+{
+    public  string Host { get; set; }
+    public  string Port { get; set; }
+    public  string UserName { get; set; }
+    public  string Password { get; set; }
+    public string FromEmail { get; set; }
+    public string FromName { get; set; }
+}

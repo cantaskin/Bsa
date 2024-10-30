@@ -3,6 +3,7 @@ using Application.Services.Repositories;
 using AutoMapper;
 using Domain.Entities;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Demoes.Queries.GetById;
 
@@ -25,7 +26,11 @@ public class GetByIdDemoQuery : IRequest<GetByIdDemoResponse>
 
         public async Task<GetByIdDemoResponse> Handle(GetByIdDemoQuery request, CancellationToken cancellationToken)
         {
-            Demo? demo = await _demoRepository.GetAsync(predicate: d => d.Id == request.Id, cancellationToken: cancellationToken);
+            Demo? demo = await _demoRepository.GetAsync(predicate: d => d.Id == request.Id, 
+                include: q => q.Include(demo => demo.Category)
+                    .Include(demo => demo.Language)
+                .Include(demo => demo.Artist),
+                cancellationToken: cancellationToken);
             await _demoBusinessRules.DemoShouldExistWhenSelected(demo);
 
             GetByIdDemoResponse response = _mapper.Map<GetByIdDemoResponse>(demo);
