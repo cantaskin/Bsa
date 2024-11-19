@@ -11,7 +11,11 @@ using Application.Features.Categories.Constants;
 using Application.Features.Demoes.Constants;
 using Application.Features.Languages.Constants;
 using Application.Features.ToneCategories.Constants;
-using Application.Features.GenderPsas.Constants;
+using Application.Features.AiVoiceProjects.Constants;
+using Application.Features.RealVoiceProjects.Constants;
+using Application.Features.UsageRights.Constants;
+using Application.Features.Blogs.Constants;
+using Application.Features.BlogCategories.Constants;
 
 namespace Persistence.EntityConfigurations;
 
@@ -175,29 +179,73 @@ public class OperationClaimConfiguration : IEntityTypeConfiguration<OperationCla
         #endregion
         
         
-        #region GenderPsas CRUD
+        
+        #region AiVoiceProjects CRUD
         featureOperationClaims.AddRange(
             [
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Admin },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Read },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Write },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Create },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Update },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Delete },
+                new() { Id = ++lastId, Name = AiVoiceProjectsOperationClaims.Admin },
+                new() { Id = ++lastId, Name = AiVoiceProjectsOperationClaims.Read },
+                new() { Id = ++lastId, Name = AiVoiceProjectsOperationClaims.Write },
+                new() { Id = ++lastId, Name = AiVoiceProjectsOperationClaims.Create },
+                new() { Id = ++lastId, Name = AiVoiceProjectsOperationClaims.Update },
+                new() { Id = ++lastId, Name = AiVoiceProjectsOperationClaims.Delete },
             ]
         );
         #endregion
         
         
-        #region GenderPsas CRUD
+        
+        #region RealVoiceProjects CRUD
         featureOperationClaims.AddRange(
             [
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Admin },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Read },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Write },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Create },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Update },
-                new() { Id = ++lastId, Name = GenderPsasOperationClaims.Delete },
+                new() { Id = ++lastId, Name = RealVoiceProjectsOperationClaims.Admin },
+                new() { Id = ++lastId, Name = RealVoiceProjectsOperationClaims.Read },
+                new() { Id = ++lastId, Name = RealVoiceProjectsOperationClaims.Write },
+                new() { Id = ++lastId, Name = RealVoiceProjectsOperationClaims.Create },
+                new() { Id = ++lastId, Name = RealVoiceProjectsOperationClaims.Update },
+                new() { Id = ++lastId, Name = RealVoiceProjectsOperationClaims.Delete },
+            ]
+        );
+        #endregion
+        
+        
+        #region UsageRights CRUD
+        featureOperationClaims.AddRange(
+            [
+                new() { Id = ++lastId, Name = UsageRightsOperationClaims.Admin },
+                new() { Id = ++lastId, Name = UsageRightsOperationClaims.Read },
+                new() { Id = ++lastId, Name = UsageRightsOperationClaims.Write },
+                new() { Id = ++lastId, Name = UsageRightsOperationClaims.Create },
+                new() { Id = ++lastId, Name = UsageRightsOperationClaims.Update },
+                new() { Id = ++lastId, Name = UsageRightsOperationClaims.Delete },
+            ]
+        );
+        #endregion
+        
+        
+        #region Blogs CRUD
+        featureOperationClaims.AddRange(
+            [
+                new() { Id = ++lastId, Name = BlogsOperationClaims.Admin },
+                new() { Id = ++lastId, Name = BlogsOperationClaims.Read },
+                new() { Id = ++lastId, Name = BlogsOperationClaims.Write },
+                new() { Id = ++lastId, Name = BlogsOperationClaims.Create },
+                new() { Id = ++lastId, Name = BlogsOperationClaims.Update },
+                new() { Id = ++lastId, Name = BlogsOperationClaims.Delete },
+            ]
+        );
+        #endregion
+        
+        
+        #region BlogCategories CRUD
+        featureOperationClaims.AddRange(
+            [
+                new() { Id = ++lastId, Name = BlogCategoriesOperationClaims.Admin },
+                new() { Id = ++lastId, Name = BlogCategoriesOperationClaims.Read },
+                new() { Id = ++lastId, Name = BlogCategoriesOperationClaims.Write },
+                new() { Id = ++lastId, Name = BlogCategoriesOperationClaims.Create },
+                new() { Id = ++lastId, Name = BlogCategoriesOperationClaims.Update },
+                new() { Id = ++lastId, Name = BlogCategoriesOperationClaims.Delete },
             ]
         );
         #endregion

@@ -33,8 +33,7 @@ public class GetByIdAdminArtistQuery : IRequest<GetByIdAdminArtistResponse>
         public async Task<GetByIdAdminArtistResponse> Handle(GetByIdAdminArtistQuery request, CancellationToken cancellationToken)
         {
             Artist? artist = await _artistRepository.GetAsync(predicate: a => a.Id == request.Id,
-                include: query => query.Include(a => a.Languages).
-                    Include(a => a.GenderPsa)
+                include: query => query.Include(a => a.Languages)
                     .Include(artist => artist.Demos)
                     .Include(artist => artist.ToneCategory),
                 cancellationToken: cancellationToken);
@@ -42,7 +41,6 @@ public class GetByIdAdminArtistQuery : IRequest<GetByIdAdminArtistResponse>
 
             
             GetByIdAdminArtistResponse response = _mapper.Map<GetByIdAdminArtistResponse>(artist);
-            response.GenderName = artist.GenderPsa.Name;//GenderPsa var mý diye bir fonksiyon yaz
             response.ToneCategoryName = artist.ToneCategory?.Name; //Tonecategory var mý diye yaz 
             response.DemoIds = _artistService.GetIdsFromCollection(artist.Demos);
 

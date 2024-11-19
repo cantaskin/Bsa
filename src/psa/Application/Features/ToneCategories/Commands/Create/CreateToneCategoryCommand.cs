@@ -28,7 +28,7 @@ public class CreateToneCategoryCommand : IRequest<CreatedToneCategoryResponse>
         {
             ToneCategory toneCategory = _mapper.Map<ToneCategory>(request);
 
-            await _toneCategoryRepository.AddAsync(toneCategory);
+            await _toneCategoryRepository.AddAsync(toneCategory, cancellationToken);
 
             CreatedToneCategoryResponse response = _mapper.Map<CreatedToneCategoryResponse>(toneCategory);
             return response;

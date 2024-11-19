@@ -28,7 +28,7 @@ public class CreateCategoryCommand : IRequest<CreatedCategoryResponse>
         {
             Category category = _mapper.Map<Category>(request);
 
-            await _categoryRepository.AddAsync(category);
+            await _categoryRepository.AddAsync(category, cancellationToken);
 
             CreatedCategoryResponse response = _mapper.Map<CreatedCategoryResponse>(category);
             return response;

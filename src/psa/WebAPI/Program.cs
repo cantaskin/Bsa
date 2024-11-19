@@ -1,7 +1,9 @@
 using Application;
+using Domain.DTO;
 using FluentEmail.Smtp;
 using Infrastructure;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.WebApi.Extensions;
@@ -22,6 +24,8 @@ using WebAPI;
 WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
+
+builder.Services.Configure<FileSettings>(builder.Configuration.GetSection("FileRules"));
 builder.Services.AddApplicationServices(
     mailSettings: builder.Configuration.GetSection("MailSettings").Get<MailSettings>()
         ?? throw new InvalidOperationException("MailSettings section cannot found in configuration."),
@@ -70,6 +74,8 @@ builder.Services.AddCors(opt =>
 var smtpSettings =
     builder.Configuration.GetSection("SmtpSettings").Get<SmtpSettings>();
 
+
+
 builder.Services.AddSwaggerGen(opt =>
 {
     opt.AddSecurityDefinition(
@@ -112,7 +118,7 @@ if (app.Environment.IsDevelopment())
 }
 
 if (app.Environment.IsProduction())
-    app.ConfigureCustomExceptionMiddleware();
+   app.ConfigureCustomExceptionMiddleware();
 
 app.UseDbMigrationApplier();
 
@@ -132,12 +138,3 @@ app.UseResponseLocalization();
 app.Run();
 
 
-public  class SmtpSettings
-{
-    public  string Host { get; set; }
-    public  string Port { get; set; }
-    public  string UserName { get; set; }
-    public  string Password { get; set; }
-    public string FromEmail { get; set; }
-    public string FromName { get; set; }
-}

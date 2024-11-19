@@ -4,6 +4,7 @@ using NArchitecture.Core.Application.Rules;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
 using Domain.Entities;
+using Microsoft.AspNetCore.Http;
 
 namespace Application.Features.Artists.Rules;
 
@@ -38,5 +39,11 @@ public class ArtistBusinessRules : BaseBusinessRules
             cancellationToken: cancellationToken
         );
         await ArtistShouldExistWhenSelected(artist);
+    }
+
+    public void IsFileExist(IFormFile file)
+    {
+        if (file == null)
+            throw new BusinessException(ArtistsBusinessMessages.ArtistFileNotExists);
     }
 }

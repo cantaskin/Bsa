@@ -27,7 +27,7 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             yield return new Category
             {
                 Id = GuidFinder.Documentary,
-                Name = "Documentary"
+                Name = "Belgesel"
             };
 
             yield return new Category
@@ -39,19 +39,19 @@ public class CategoryConfiguration : IEntityTypeConfiguration<Category>
             yield return new Category
             {
                 Id = GuidFinder.Dubbing,
-                Name = "Dubbing"
+                Name = "Dublaj"
             };
 
             yield return new Category
             {
                 Id = GuidFinder.Advertising,
-                Name = "Advertisement"
+                Name = "Reklam"
             };
 
             yield return new Category
             {
                 Id = GuidFinder.Central,
-                Name = "Central"
+                Name = "Santral"
             };
         }
     }

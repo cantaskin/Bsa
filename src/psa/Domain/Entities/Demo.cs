@@ -5,7 +5,7 @@ namespace Domain.Entities;
 public class Demo : Entity<Guid>
 {
     public string Name { get; set; }
-    public string Url { get; set; }
+    public string Url { get; set; } //4
     public Guid CategoryId { get; set; }
     public Category Category { get; set; }
     public Guid LanguageId { get; set; }

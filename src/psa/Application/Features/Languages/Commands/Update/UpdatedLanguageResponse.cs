@@ -6,4 +6,6 @@ public class UpdatedLanguageResponse : IResponse
 {
     public Guid Id { get; set; }
     public string Name { get; set; }
+
+    public string LanguageCode { get; set; }
 }

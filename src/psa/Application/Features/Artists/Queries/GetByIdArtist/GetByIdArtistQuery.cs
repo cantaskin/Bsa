@@ -30,8 +30,7 @@ public class GetByIdArtistQuery : IRequest<GetByIdArtistResponse>
         public async Task<GetByIdArtistResponse> Handle(GetByIdArtistQuery request, CancellationToken cancellationToken)
         {
             Artist? artist = await _artistRepository.GetAsync(predicate: a => a.Id == request.Id,
-                include:query => query.Include(a => a.Languages).
-                    Include(a => a.GenderPsa)
+                include:query => query.Include(a => a.Languages)
                     .Include(artist => artist.Demos)
                     .Include(artist => artist.ToneCategory), 
                 cancellationToken: cancellationToken);

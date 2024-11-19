@@ -4,6 +4,11 @@ using NArchitecture.Core.Persistence.Paging;
 using Domain.Entities;
 using Microsoft.EntityFrameworkCore.Query;
 using System.Linq.Expressions;
+using Nest;
+using Org.BouncyCastle.Asn1.Ocsp;
+using System.Threading;
+using Language = Domain.Entities.Language;
+using Application.Features.Artists.Constants;
 
 namespace Application.Services.Languages;
 
@@ -73,5 +78,26 @@ public class LanguageManager : ILanguageService
         Language deletedLanguage = await _languageRepository.DeleteAsync(language);
 
         return deletedLanguage;
+    }
+
+    public async Task<ICollection<Language>> AddLanguageFromIds(ICollection<Guid> languageIds,
+        ICollection<Language> languages,
+        CancellationToken cancellationToken)
+    {
+        foreach (var languageId in languageIds)
+        {
+            await _languageBusinessRules.LanguageIdShouldExistWhenSelected(languageId, cancellationToken);
+            var language = await GetAsync(l => l.Id == languageId, cancellationToken: cancellationToken);
+            if (language != null)
+                languages.Add(language);
+        }
+
+        return languages;
+    }
+
+    public async Task LanguageShouldExistWhenSelected(Language? language)
+    {
+        if (language == null)
+            await _languageBusinessRules.LanguageShouldExistWhenSelected(language);
     }
 }

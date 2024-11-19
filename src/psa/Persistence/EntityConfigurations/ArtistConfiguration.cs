@@ -1,4 +1,5 @@
 using Domain.Entities;
+using Domain.Enums;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using NArchitecture.Core.Security.Hashing;
@@ -16,12 +17,12 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
         builder.Property(a => a.UserName).HasColumnName("UserName").IsRequired();
         builder.Property(a => a.PhotoUrl).HasColumnName("PhotoUrl");
         builder.Property(a => a.MailAddress).HasColumnName("MailAddress").IsRequired();
-        builder.Property(a => a.YoutubeAddress).HasColumnName("YoutubeAddress");
+        builder.Property(a => a.YoutubeVideosUrl).HasColumnName("YoutubeAddress");
         builder.Property(a => a.InstAiUnitPrice).HasColumnName("InstAiUnitPrice").IsRequired();
         builder.Property(a => a.ProfAiUnitPrice).HasColumnName("ProfAiUnitPrice").IsRequired();
         builder.Property(a => a.RealVoiceStampPrice).HasColumnName("RealVoiceStampPrice").IsRequired();
         builder.Property(a => a.ToneCategoryId).HasColumnName("ToneCategoryId").IsRequired();
-        builder.Property(a => a.GenderPsaId).HasColumnName("GenderPsaId").IsRequired();
+        builder.Property(a => a.Gender).HasColumnName("Gender").IsRequired();
         builder.Property(a => a.CreatedDate).HasColumnName("CreatedDate").IsRequired();
         builder.Property(a => a.UpdatedDate).HasColumnName("UpdatedDate");
         builder.Property(a => a.DeletedDate).HasColumnName("DeletedDate");
@@ -45,7 +46,7 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
                 InstAiUnitPrice = 100.0f,
                 ProfAiUnitPrice = 150.0f,
                 RealVoiceStampPrice = 200.0f,
-                GenderPsaId = GuidFinder.Male,
+                Gender = GenderEnum.Male,
                 ToneCategoryId = GuidFinder.Mature // Olgun
             };
 
@@ -58,7 +59,7 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
                 InstAiUnitPrice = 105.0f,
                 ProfAiUnitPrice = 155.0f,
                 RealVoiceStampPrice = 205.0f,
-                GenderPsaId = GuidFinder.Female,
+                Gender = GenderEnum.Female,
                 ToneCategoryId = GuidFinder.Young // Genç
             };
 
@@ -71,7 +72,7 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
                 InstAiUnitPrice = 110.0f,
                 ProfAiUnitPrice = 160.0f,
                 RealVoiceStampPrice = 210.0f,
-                GenderPsaId = GuidFinder.Male,
+                Gender = GenderEnum.Male,
                 ToneCategoryId = GuidFinder.MiddleAge // Orta Yaþ
             };
 
@@ -84,7 +85,7 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
                 InstAiUnitPrice = 115.0f,
                 ProfAiUnitPrice = 165.0f,
                 RealVoiceStampPrice = 215.0f,
-                GenderPsaId = GuidFinder.Female, // Kadýn
+                Gender = GenderEnum.Female, // Kadýn
                 ToneCategoryId = GuidFinder.Child
             };
 
@@ -97,7 +98,7 @@ public class ArtistConfiguration : IEntityTypeConfiguration<Artist>
                 InstAiUnitPrice = 120.0f,
                 ProfAiUnitPrice = 170.0f,
                 RealVoiceStampPrice = 220.0f,
-                GenderPsaId = GuidFinder.Male, // Erkek
+                Gender = GenderEnum.Male, // Erkek
                 ToneCategoryId = GuidFinder.Mature // Olgun
             };
         }

@@ -31,7 +31,7 @@ public class UpdateCategoryCommand : IRequest<UpdatedCategoryResponse>
             await _categoryBusinessRules.CategoryShouldExistWhenSelected(category);
             category = _mapper.Map(request, category);
 
-            await _categoryRepository.UpdateAsync(category!);
+            await _categoryRepository.UpdateAsync(category!, cancellationToken);
 
             UpdatedCategoryResponse response = _mapper.Map<UpdatedCategoryResponse>(category);
             return response;

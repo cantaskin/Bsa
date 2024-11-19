@@ -10,6 +10,8 @@ public class CreateLanguageCommand : IRequest<CreatedLanguageResponse>
 {
     public required string Name { get; set; }
 
+    public required string LanguageCode { get; set; }
+
     public class CreateLanguageCommandHandler : IRequestHandler<CreateLanguageCommand, CreatedLanguageResponse>
     {
         private readonly IMapper _mapper;
@@ -28,7 +30,7 @@ public class CreateLanguageCommand : IRequest<CreatedLanguageResponse>
         {
             Language language = _mapper.Map<Language>(request);
 
-            await _languageRepository.AddAsync(language);
+            await _languageRepository.AddAsync(language, cancellationToken);
 
             CreatedLanguageResponse response = _mapper.Map<CreatedLanguageResponse>(language);
             return response;

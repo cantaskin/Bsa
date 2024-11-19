@@ -18,7 +18,8 @@ public class MappingProfiles : Profile
         CreateMap<CreateDemoCommand, Demo>();
         CreateMap<Demo, CreatedDemoResponse>();
 
-        CreateMap<UpdateDemoCommand, Demo>();
+        CreateMap<UpdateDemoCommand, Demo>()
+            .ForAllMembers(opt => opt.Condition((src, dest, srcMember) => srcMember != null));
         CreateMap<Demo, UpdatedDemoResponse>();
 
         CreateMap<DeleteDemoCommand, Demo>();

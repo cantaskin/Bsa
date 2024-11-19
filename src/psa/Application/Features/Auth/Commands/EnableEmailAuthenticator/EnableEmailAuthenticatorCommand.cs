@@ -2,6 +2,7 @@
 using Application.Features.Auth.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.MailService;
+using Application.Services.MailTemplateService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
 using Domain.Entities;
@@ -37,18 +38,20 @@ public class EnableEmailAuthenticatorCommand : IRequest//, ISecuredRequest
         private readonly IEmailAuthenticatorRepository _emailAuthenticatorRepository;
         private readonly IEMailService _emailService;
         private readonly IUserService _userService;
+        private readonly IEmailTemplateService _emailTemplateService;
 
         public EnableEmailAuthenticatorCommandHandler(
             IUserService userService,
             IEmailAuthenticatorRepository emailAuthenticatorRepository,
             AuthBusinessRules authBusinessRules,
-            IAuthenticatorService authenticatorService, IEMailService emailService)
+            IAuthenticatorService authenticatorService, IEMailService emailService, IEmailTemplateService emailTemplateService)
         {
             _userService = userService;
             _emailAuthenticatorRepository = emailAuthenticatorRepository;
             _authBusinessRules = authBusinessRules;
             _authenticatorService = authenticatorService;
             _emailService = emailService;
+            _emailTemplateService = emailTemplateService;
         }
 
         public async Task Handle(EnableEmailAuthenticatorCommand request, CancellationToken cancellationToken)
@@ -67,34 +70,10 @@ public class EnableEmailAuthenticatorCommand : IRequest//, ISecuredRequest
             EmailAuthenticator addedEmailAuthenticator = await _emailAuthenticatorRepository.AddAsync(emailAuthenticator);
 
             var toEmailList = new List<MailboxAddress> { new(name: user.Email, user.Email) };
-            var verificationUrl = $"{request.VerifyEmailUrlPrefix}?ActivationKey={HttpUtility.UrlEncode(addedEmailAuthenticator.ActivationKey)}";
-            var mail = new Mail
-            {
-                ToList = toEmailList,
-                Subject = "Email Doğrulama - Bibersa",
-                HtmlBody = $@"
-<!DOCTYPE html>
-<html>
-    <body style='font-family: Arial, sans-serif;'>
-        <div style='max-width: 600px; margin: 0 auto; padding: 20px;'>
-            <h2>Email Doğrulama</h2>
-            <p>Merhaba,</p>
-            <p>Bibersa hesabınız için email doğrulama işlemini tamamlamak üzere aşağıdaki butona tıklayın:</p>
-            <p style='text-align: center;'>
-                <a href='{verificationUrl}' 
-                   style='background-color: #4CAF50; color: white; padding: 12px 24px; 
-                          text-decoration: none; border-radius: 4px; display: inline-block;'>
-                    Email Adresimi Doğrula
-                </a>
-            </p>
-            <p>Ya da aşağıdaki linki tarayıcınızda açın:</p>
-            <p style='word-break: break-all;'>{verificationUrl}</p>
-            <p>Bu email'i siz talep etmediyseniz, lütfen dikkate almayın.</p>
-        </div>
-    </body>
-</html>"
+            var activationKey = HttpUtility.UrlEncode(addedEmailAuthenticator.ActivationKey);
+            var verificationUrl = $"{request.VerifyEmailUrlPrefix}?ActivationKey={activationKey}";
 
-};
+            var mail = _emailTemplateService.GetEmailVerificationTemplate(toEmailList, verificationUrl, activationKey);
 
             await _emailService.SendEmailAsync(mail);
           

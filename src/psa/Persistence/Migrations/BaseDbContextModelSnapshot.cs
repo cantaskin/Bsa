@@ -37,6 +37,71 @@ namespace Persistence.Migrations
                     b.ToTable("ArtistLanguage");
                 });
 
+            modelBuilder.Entity("Domain.Entities.AiVoiceProject", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<Guid>("ArtistId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("ArtistId");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<Guid?>("DemoId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("LanguageId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LanguageId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<int>("ProjectSelection")
+                        .HasColumnType("int")
+                        .HasColumnName("ProjectSelection");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Url");
+
+                    b.Property<Guid>("UsageRightId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UsageRightId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("DemoId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("UsageRightId");
+
+                    b.ToTable("AiVoiceProjects", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.Artist", b =>
                 {
                     b.Property<Guid>("Id")
@@ -52,13 +117,16 @@ namespace Persistence.Migrations
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletedDate");
 
-                    b.Property<Guid>("GenderPsaId")
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("GenderPsaId");
+                    b.Property<int>("Gender")
+                        .HasColumnType("int")
+                        .HasColumnName("Gender");
 
                     b.Property<float>("InstAiUnitPrice")
                         .HasColumnType("real")
                         .HasColumnName("InstAiUnitPrice");
+
+                    b.Property<string>("InstVoiceId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MailAddress")
                         .IsRequired()
@@ -72,6 +140,9 @@ namespace Persistence.Migrations
                     b.Property<float>("ProfAiUnitPrice")
                         .HasColumnType("real")
                         .HasColumnName("ProfAiUnitPrice");
+
+                    b.Property<string>("ProfVoiceId")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<float>("RealVoiceStampPrice")
                         .HasColumnType("real")
@@ -90,13 +161,11 @@ namespace Persistence.Migrations
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("UserName");
 
-                    b.Property<string>("YoutubeAddress")
+                    b.Property<string>("YoutubeVideosUrl")
                         .HasColumnType("nvarchar(max)")
                         .HasColumnName("YoutubeAddress");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("GenderPsaId");
 
                     b.HasIndex("ToneCategoryId");
 
@@ -106,8 +175,8 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = new Guid("13417965-92da-4b66-b1b6-492a26115ae0"),
-                            CreatedDate = new DateTime(2024, 10, 28, 23, 1, 24, 416, DateTimeKind.Utc).AddTicks(9557),
-                            GenderPsaId = new Guid("aabebc2e-b155-4a41-ba25-5de9354879f4"),
+                            CreatedDate = new DateTime(2024, 11, 6, 9, 40, 57, 537, DateTimeKind.Utc).AddTicks(5700),
+                            Gender = 2,
                             InstAiUnitPrice = 100f,
                             MailAddress = "artist1@example.com",
                             ProfAiUnitPrice = 150f,
@@ -118,8 +187,8 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = new Guid("0dcf85c3-684c-4c3f-b44e-c1dd3f5e8b11"),
-                            CreatedDate = new DateTime(2024, 10, 28, 23, 1, 24, 416, DateTimeKind.Utc).AddTicks(9570),
-                            GenderPsaId = new Guid("d0e43ba9-38b6-4153-9e40-df879f50f835"),
+                            CreatedDate = new DateTime(2024, 11, 6, 9, 40, 57, 537, DateTimeKind.Utc).AddTicks(5748),
+                            Gender = 1,
                             InstAiUnitPrice = 105f,
                             MailAddress = "artist2@example.com",
                             ProfAiUnitPrice = 155f,
@@ -130,8 +199,8 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = new Guid("363759b7-cd5f-4e3d-b9d3-9c4b9bdcebee"),
-                            CreatedDate = new DateTime(2024, 10, 28, 23, 1, 24, 416, DateTimeKind.Utc).AddTicks(9574),
-                            GenderPsaId = new Guid("aabebc2e-b155-4a41-ba25-5de9354879f4"),
+                            CreatedDate = new DateTime(2024, 11, 6, 9, 40, 57, 537, DateTimeKind.Utc).AddTicks(5751),
+                            Gender = 2,
                             InstAiUnitPrice = 110f,
                             MailAddress = "artist3@example.com",
                             ProfAiUnitPrice = 160f,
@@ -142,8 +211,8 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = new Guid("6ec4c059-bba1-4101-9fa0-52a2dbe002a6"),
-                            CreatedDate = new DateTime(2024, 10, 28, 23, 1, 24, 416, DateTimeKind.Utc).AddTicks(9578),
-                            GenderPsaId = new Guid("d0e43ba9-38b6-4153-9e40-df879f50f835"),
+                            CreatedDate = new DateTime(2024, 11, 6, 9, 40, 57, 537, DateTimeKind.Utc).AddTicks(5754),
+                            Gender = 1,
                             InstAiUnitPrice = 115f,
                             MailAddress = "artist4@example.com",
                             ProfAiUnitPrice = 165f,
@@ -154,8 +223,8 @@ namespace Persistence.Migrations
                         new
                         {
                             Id = new Guid("4770172e-3ef9-467a-b159-08d58c02a83b"),
-                            CreatedDate = new DateTime(2024, 10, 28, 23, 1, 24, 416, DateTimeKind.Utc).AddTicks(9581),
-                            GenderPsaId = new Guid("aabebc2e-b155-4a41-ba25-5de9354879f4"),
+                            CreatedDate = new DateTime(2024, 11, 6, 9, 40, 57, 537, DateTimeKind.Utc).AddTicks(5757),
+                            Gender = 2,
                             InstAiUnitPrice = 120f,
                             MailAddress = "artist5@example.com",
                             ProfAiUnitPrice = 170f,
@@ -163,6 +232,123 @@ namespace Persistence.Migrations
                             ToneCategoryId = new Guid("6b735582-018e-4d47-b3be-b4bc30411716"),
                             UserName = "Artist_5"
                         });
+                });
+
+            modelBuilder.Entity("Domain.Entities.ArtistUsageRight", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<Guid>("ArtistId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("ArtistId");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<float>("PriceRate")
+                        .HasColumnType("real")
+                        .HasColumnName("PriceRate");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.Property<Guid>("UsageRightId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UsageRightId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("UsageRightId");
+
+                    b.ToTable("ArtistUsageRights", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.Blog", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<Guid>("BlogCategoryId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("BlogCategoryId");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Content");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<string>("ThumbnailUrl")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("ThumbnailUrl");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Title");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.Property<int>("ViewCount")
+                        .HasColumnType("int")
+                        .HasColumnName("ViewCount");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BlogCategoryId");
+
+                    b.ToTable("Blogs", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.BlogCategory", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("BlogCategories", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.Category", b =>
@@ -198,7 +384,7 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("b8a96e21-d23f-4f4a-8a57-2c0c676b5e1f"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Documentary"
+                            Name = "Belgesel"
                         },
                         new
                         {
@@ -210,19 +396,19 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("13417965-92da-4b66-b1b6-492a26115ae0"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Dubbing"
+                            Name = "Dublaj"
                         },
                         new
                         {
                             Id = new Guid("6c9a3e06-9ccb-4ffd-8708-0f635e64244e"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Advertisement"
+                            Name = "Reklam"
                         },
                         new
                         {
                             Id = new Guid("90b35700-2942-478d-b40d-3b52ffcc4494"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Central"
+                            Name = "Santral"
                         });
                 });
 
@@ -368,49 +554,6 @@ namespace Persistence.Migrations
                     b.ToTable("EmailAuthenticators", (string)null);
                 });
 
-            modelBuilder.Entity("Domain.Entities.GenderPsa", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier")
-                        .HasColumnName("Id");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("CreatedDate");
-
-                    b.Property<DateTime?>("DeletedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("DeletedDate");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)")
-                        .HasColumnName("Name");
-
-                    b.Property<DateTime?>("UpdatedDate")
-                        .HasColumnType("datetime2")
-                        .HasColumnName("UpdatedDate");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("GenderPsas", (string)null);
-
-                    b.HasData(
-                        new
-                        {
-                            Id = new Guid("aabebc2e-b155-4a41-ba25-5de9354879f4"),
-                            CreatedDate = new DateTime(2024, 10, 28, 23, 1, 24, 418, DateTimeKind.Utc).AddTicks(530),
-                            Name = "Male"
-                        },
-                        new
-                        {
-                            Id = new Guid("d0e43ba9-38b6-4153-9e40-df879f50f835"),
-                            CreatedDate = new DateTime(2024, 10, 28, 23, 1, 24, 418, DateTimeKind.Utc).AddTicks(537),
-                            Name = "Female"
-                        });
-                });
-
             modelBuilder.Entity("Domain.Entities.Language", b =>
                 {
                     b.Property<Guid>("Id")
@@ -425,6 +568,10 @@ namespace Persistence.Migrations
                     b.Property<DateTime?>("DeletedDate")
                         .HasColumnType("datetime2")
                         .HasColumnName("DeletedDate");
+
+                    b.Property<string>("LanguageCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -444,31 +591,71 @@ namespace Persistence.Migrations
                         {
                             Id = new Guid("2f608f15-f672-4f88-989f-21eeb522e931"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "English"
+                            LanguageCode = "en",
+                            Name = "İngilizce"
                         },
                         new
                         {
                             Id = new Guid("b466599c-338b-4b0f-b908-2bd388575dc5"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Spanish"
+                            LanguageCode = "es",
+                            Name = "İspanyolca"
                         },
                         new
                         {
                             Id = new Guid("69dd6dfd-9cc6-43ba-a24a-bde4f3452b73"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "French"
+                            LanguageCode = "fr",
+                            Name = "Fransızca"
                         },
                         new
                         {
                             Id = new Guid("05bcb769-f369-4231-a78c-18ccbb7648da"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "German"
+                            LanguageCode = "de",
+                            Name = "Almanca"
                         },
                         new
                         {
                             Id = new Guid("f8f7d383-d887-4034-9352-90143afc1a8a"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "Japanese"
+                            LanguageCode = "ja",
+                            Name = "Japonca"
+                        },
+                        new
+                        {
+                            Id = new Guid("8151ab74-7b00-4d3e-8fde-af3a394404b3"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LanguageCode = "tr",
+                            Name = "Türkçe"
+                        },
+                        new
+                        {
+                            Id = new Guid("e26b8af8-b70c-4482-ba89-5737a7bac3a8"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LanguageCode = "it",
+                            Name = "İtalyanca"
+                        },
+                        new
+                        {
+                            Id = new Guid("5c69a048-a67b-4cb8-a3ef-3766c7f40b5a"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LanguageCode = "ar",
+                            Name = "Arapça"
+                        },
+                        new
+                        {
+                            Id = new Guid("75264907-d0d8-4de5-9883-83dbcf40e9ce"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LanguageCode = "ru",
+                            Name = "Rusça"
+                        },
+                        new
+                        {
+                            Id = new Guid("aefcbc93-2a8e-408f-918f-b6e1f9666e6f"),
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            LanguageCode = "zh",
+                            Name = "Çince"
                         });
                 });
 
@@ -825,73 +1012,181 @@ namespace Persistence.Migrations
                         {
                             Id = 54,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Admin"
+                            Name = "AiVoiceProjects.Admin"
                         },
                         new
                         {
                             Id = 55,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Read"
+                            Name = "AiVoiceProjects.Read"
                         },
                         new
                         {
                             Id = 56,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Write"
+                            Name = "AiVoiceProjects.Write"
                         },
                         new
                         {
                             Id = 57,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Create"
+                            Name = "AiVoiceProjects.Create"
                         },
                         new
                         {
                             Id = 58,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Update"
+                            Name = "AiVoiceProjects.Update"
                         },
                         new
                         {
                             Id = 59,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Delete"
+                            Name = "AiVoiceProjects.Delete"
                         },
                         new
                         {
                             Id = 60,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Admin"
+                            Name = "RealVoiceProjects.Admin"
                         },
                         new
                         {
                             Id = 61,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Read"
+                            Name = "RealVoiceProjects.Read"
                         },
                         new
                         {
                             Id = 62,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Write"
+                            Name = "RealVoiceProjects.Write"
                         },
                         new
                         {
                             Id = 63,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Create"
+                            Name = "RealVoiceProjects.Create"
                         },
                         new
                         {
                             Id = 64,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Update"
+                            Name = "RealVoiceProjects.Update"
                         },
                         new
                         {
                             Id = 65,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Name = "GenderPsas.Delete"
+                            Name = "RealVoiceProjects.Delete"
+                        },
+                        new
+                        {
+                            Id = 66,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "UsageRights.Admin"
+                        },
+                        new
+                        {
+                            Id = 67,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "UsageRights.Read"
+                        },
+                        new
+                        {
+                            Id = 68,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "UsageRights.Write"
+                        },
+                        new
+                        {
+                            Id = 69,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "UsageRights.Create"
+                        },
+                        new
+                        {
+                            Id = 70,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "UsageRights.Update"
+                        },
+                        new
+                        {
+                            Id = 71,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "UsageRights.Delete"
+                        },
+                        new
+                        {
+                            Id = 72,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Blogs.Admin"
+                        },
+                        new
+                        {
+                            Id = 73,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Blogs.Read"
+                        },
+                        new
+                        {
+                            Id = 74,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Blogs.Write"
+                        },
+                        new
+                        {
+                            Id = 75,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Blogs.Create"
+                        },
+                        new
+                        {
+                            Id = 76,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Blogs.Update"
+                        },
+                        new
+                        {
+                            Id = 77,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "Blogs.Delete"
+                        },
+                        new
+                        {
+                            Id = 78,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "BlogCategories.Admin"
+                        },
+                        new
+                        {
+                            Id = 79,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "BlogCategories.Read"
+                        },
+                        new
+                        {
+                            Id = 80,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "BlogCategories.Write"
+                        },
+                        new
+                        {
+                            Id = 81,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "BlogCategories.Create"
+                        },
+                        new
+                        {
+                            Id = 82,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "BlogCategories.Update"
+                        },
+                        new
+                        {
+                            Id = 83,
+                            CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            Name = "BlogCategories.Delete"
                         });
                 });
 
@@ -932,6 +1227,83 @@ namespace Persistence.Migrations
                     b.HasIndex("UserId");
 
                     b.ToTable("OtpAuthenticators", (string)null);
+                });
+
+            modelBuilder.Entity("Domain.Entities.RealVoiceProject", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<Guid>("ArtistId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("ArtistId");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<Guid?>("DemoId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("DemoId");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Description");
+
+                    b.Property<string>("FileUrls")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("LanguageId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("LanguageId");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<string>("RevisionDescription")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("RevisionDescription");
+
+                    b.Property<int>("SubmissionStatus")
+                        .HasColumnType("int")
+                        .HasColumnName("SubmissionStatus");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Text");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Url");
+
+                    b.Property<Guid>("UsageRightId")
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("UsageRightId");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ArtistId");
+
+                    b.HasIndex("DemoId");
+
+                    b.HasIndex("LanguageId");
+
+                    b.HasIndex("UsageRightId");
+
+                    b.ToTable("RealVoiceProjects", (string)null);
                 });
 
             modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
@@ -1049,6 +1421,40 @@ namespace Persistence.Migrations
                         });
                 });
 
+            modelBuilder.Entity("Domain.Entities.UsageRight", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("Id");
+
+                    b.Property<DateTime>("CreatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CreatedDate");
+
+                    b.Property<DateTime?>("DeletedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("DeletedDate");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Description");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)")
+                        .HasColumnName("Name");
+
+                    b.Property<DateTime?>("UpdatedDate")
+                        .HasColumnType("datetime2")
+                        .HasColumnName("UpdatedDate");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UsageRights", (string)null);
+                });
+
             modelBuilder.Entity("Domain.Entities.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1099,12 +1505,12 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("17222192-4bf7-4aca-b89a-d26a999c339b"),
+                            Id = new Guid("ef28dc14-2ff7-468c-af8c-3aa11008c90b"),
                             AuthenticatorType = 0,
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
-                            Email = "narch@kodlama.io",
-                            PasswordHash = new byte[] { 108, 41, 44, 11, 153, 111, 169, 109, 40, 240, 140, 134, 182, 113, 134, 38, 158, 31, 61, 98, 188, 145, 144, 242, 23, 109, 50, 47, 228, 238, 215, 149, 142, 27, 218, 187, 13, 16, 248, 251, 19, 6, 152, 190, 234, 151, 146, 247, 224, 156, 152, 161, 196, 0, 23, 15, 121, 133, 235, 139, 24, 113, 61, 33 },
-                            PasswordSalt = new byte[] { 121, 180, 174, 130, 54, 131, 199, 88, 100, 19, 40, 26, 219, 110, 126, 33, 129, 65, 149, 3, 191, 181, 61, 212, 15, 132, 148, 217, 141, 72, 244, 69, 107, 221, 61, 41, 23, 27, 207, 203, 184, 180, 176, 224, 115, 37, 113, 100, 174, 22, 129, 93, 142, 35, 56, 33, 43, 120, 196, 252, 70, 242, 129, 236, 27, 189, 132, 108, 146, 124, 211, 61, 115, 241, 200, 207, 227, 129, 143, 74, 34, 59, 136, 74, 84, 1, 179, 5, 143, 133, 21, 227, 5, 11, 215, 123, 75, 138, 6, 56, 150, 242, 78, 32, 102, 34, 128, 214, 225, 119, 76, 79, 226, 75, 92, 153, 45, 1, 192, 144, 134, 60, 191, 0, 104, 47, 62, 168 },
+                            Email = "bbibersa@gmail.com",
+                            PasswordHash = new byte[] { 232, 189, 194, 109, 80, 113, 76, 49, 225, 232, 22, 152, 2, 55, 200, 233, 77, 26, 54, 84, 124, 203, 163, 77, 24, 179, 238, 209, 172, 152, 183, 210, 249, 178, 231, 23, 173, 156, 19, 247, 222, 99, 154, 196, 146, 17, 40, 137, 205, 69, 228, 233, 222, 226, 30, 176, 171, 140, 91, 40, 242, 247, 130, 215 },
+                            PasswordSalt = new byte[] { 191, 44, 42, 49, 252, 91, 234, 219, 27, 176, 21, 119, 17, 123, 190, 155, 104, 186, 95, 53, 0, 83, 198, 17, 54, 121, 204, 222, 101, 115, 8, 217, 32, 55, 116, 70, 156, 9, 28, 183, 95, 155, 3, 151, 84, 166, 21, 18, 2, 86, 139, 217, 192, 228, 91, 132, 241, 141, 183, 117, 58, 231, 121, 22, 197, 217, 197, 204, 58, 217, 81, 131, 176, 43, 191, 194, 103, 227, 141, 199, 114, 159, 120, 111, 44, 235, 140, 85, 191, 195, 78, 225, 135, 58, 231, 73, 230, 49, 154, 104, 11, 193, 173, 38, 249, 59, 246, 255, 36, 69, 162, 195, 82, 87, 107, 166, 107, 51, 137, 143, 12, 121, 111, 250, 210, 143, 109, 248 },
                             UserName = ""
                         });
                 });
@@ -1147,10 +1553,10 @@ namespace Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("c79c4210-082a-4046-b3f2-ac0c74154b11"),
+                            Id = new Guid("415c4490-88f6-43b6-b09a-6957a3927bba"),
                             CreatedDate = new DateTime(1, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified),
                             OperationClaimId = 1,
-                            UserId = new Guid("17222192-4bf7-4aca-b89a-d26a999c339b")
+                            UserId = new Guid("ef28dc14-2ff7-468c-af8c-3aa11008c90b")
                         });
                 });
 
@@ -1169,23 +1575,78 @@ namespace Persistence.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Domain.Entities.Artist", b =>
+            modelBuilder.Entity("Domain.Entities.AiVoiceProject", b =>
                 {
-                    b.HasOne("Domain.Entities.GenderPsa", "GenderPsa")
-                        .WithMany("Artists")
-                        .HasForeignKey("GenderPsaId")
+                    b.HasOne("Domain.Entities.Artist", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Domain.Entities.Demo", "Demo")
+                        .WithMany()
+                        .HasForeignKey("DemoId");
+
+                    b.HasOne("Domain.Entities.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.UsageRight", "UsageRight")
+                        .WithMany()
+                        .HasForeignKey("UsageRightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Demo");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("UsageRight");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Artist", b =>
+                {
                     b.HasOne("Domain.Entities.ToneCategory", "ToneCategory")
                         .WithMany("Artists")
                         .HasForeignKey("ToneCategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("GenderPsa");
-
                     b.Navigation("ToneCategory");
+                });
+
+            modelBuilder.Entity("Domain.Entities.ArtistUsageRight", b =>
+                {
+                    b.HasOne("Domain.Entities.Artist", "Artist")
+                        .WithMany("ArtistUsageRights")
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.UsageRight", "UsageRight")
+                        .WithMany("ArtistUsageRights")
+                        .HasForeignKey("UsageRightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("UsageRight");
+                });
+
+            modelBuilder.Entity("Domain.Entities.Blog", b =>
+                {
+                    b.HasOne("Domain.Entities.BlogCategory", "BlogCategory")
+                        .WithMany("Blogs")
+                        .HasForeignKey("BlogCategoryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("BlogCategory");
                 });
 
             modelBuilder.Entity("Domain.Entities.Demo", b =>
@@ -1237,6 +1698,39 @@ namespace Persistence.Migrations
                     b.Navigation("User");
                 });
 
+            modelBuilder.Entity("Domain.Entities.RealVoiceProject", b =>
+                {
+                    b.HasOne("Domain.Entities.Artist", "Artist")
+                        .WithMany()
+                        .HasForeignKey("ArtistId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.Demo", "Demo")
+                        .WithMany()
+                        .HasForeignKey("DemoId");
+
+                    b.HasOne("Domain.Entities.Language", "Language")
+                        .WithMany()
+                        .HasForeignKey("LanguageId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Domain.Entities.UsageRight", "UsageRight")
+                        .WithMany()
+                        .HasForeignKey("UsageRightId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Artist");
+
+                    b.Navigation("Demo");
+
+                    b.Navigation("Language");
+
+                    b.Navigation("UsageRight");
+                });
+
             modelBuilder.Entity("Domain.Entities.RefreshToken", b =>
                 {
                     b.HasOne("Domain.Entities.User", "User")
@@ -1269,7 +1763,14 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Entities.Artist", b =>
                 {
+                    b.Navigation("ArtistUsageRights");
+
                     b.Navigation("Demos");
+                });
+
+            modelBuilder.Entity("Domain.Entities.BlogCategory", b =>
+                {
+                    b.Navigation("Blogs");
                 });
 
             modelBuilder.Entity("Domain.Entities.Category", b =>
@@ -1277,14 +1778,14 @@ namespace Persistence.Migrations
                     b.Navigation("Demos");
                 });
 
-            modelBuilder.Entity("Domain.Entities.GenderPsa", b =>
+            modelBuilder.Entity("Domain.Entities.ToneCategory", b =>
                 {
                     b.Navigation("Artists");
                 });
 
-            modelBuilder.Entity("Domain.Entities.ToneCategory", b =>
+            modelBuilder.Entity("Domain.Entities.UsageRight", b =>
                 {
-                    b.Navigation("Artists");
+                    b.Navigation("ArtistUsageRights");
                 });
 
             modelBuilder.Entity("Domain.Entities.User", b =>

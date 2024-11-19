@@ -4,10 +4,12 @@ using Application.Features.Auth.Rules;
 using Application.Features.Users.Rules;
 using Application.Services.AuthenticatorService;
 using Application.Services.AuthService;
+using Application.Services.MailService;
 using Application.Services.Repositories;
 using Application.Services.UsersService;
 using AutoMapper;
 using FluentValidation.TestHelper;
+using Infrastructure.Adapters.MailService;
 using Microsoft.Extensions.Configuration;
 using NArchitecture.Core.CrossCuttingConcerns.Exception.Types;
 using NArchitecture.Core.Localization.Abstraction;
@@ -58,7 +60,7 @@ public class LoginTests
         IEmailAuthenticatorHelper emailAuthenticatorHelper = new EmailAuthenticatorHelper();
         MailSettings mailSettings =
             _configuration.GetSection("MailSettings").Get<MailSettings>() ?? throw new Exception("Mail settings not found.");
-        IMailService mailService = new MailKitMailService(mailSettings);
+        IEMailService mailService = new FluentMailServiceAdapter();
         IOtpAuthenticatorHelper otpAuthenticatorHelper = new OtpNetOtpAuthenticatorHelper();
         ILocalizationService localizationService = new ResourceLocalizationManager(resources: [])
         {
@@ -85,7 +87,7 @@ public class LoginTests
         );
         _validator = new LoginCommandValidator();
         _loginCommand = new LoginCommand();
-        _loginCommandHandler = new LoginCommandHandler(_userService, _authService, authBusinessRules, _authententicatorService);
+        _loginCommandHandler = new LoginCommandHandler(_userService, _authService, authBusinessRules, _authententicatorService,emailAuthenticatorRepository);
     }
 
     [Fact]

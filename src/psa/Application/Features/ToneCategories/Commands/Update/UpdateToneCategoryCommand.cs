@@ -31,7 +31,7 @@ public class UpdateToneCategoryCommand : IRequest<UpdatedToneCategoryResponse>
             await _toneCategoryBusinessRules.ToneCategoryShouldExistWhenSelected(toneCategory);
             toneCategory = _mapper.Map(request, toneCategory);
 
-            await _toneCategoryRepository.UpdateAsync(toneCategory!);
+            await _toneCategoryRepository.UpdateAsync(toneCategory!, cancellationToken);
 
             UpdatedToneCategoryResponse response = _mapper.Map<UpdatedToneCategoryResponse>(toneCategory);
             return response;

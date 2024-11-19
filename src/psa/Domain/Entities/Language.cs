@@ -4,6 +4,6 @@ namespace Domain.Entities;
 public class Language : Entity<Guid>
 {
     public  string Name { get; set; }
-    
+    public string LanguageCode { get; set; }
     public ICollection<Artist>? Artists { get; set; }
 }

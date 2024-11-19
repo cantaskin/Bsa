@@ -25,8 +25,16 @@ using Application.Services.Categories;
 using Application.Services.Demoes;
 using Application.Services.Languages;
 using Application.Services.ToneCategories;
-using Application.Services.GenderPsas;
 using Application.Services.MailService;
+using Application.Services.AiVoiceProjects;
+using Application.Services.MailTemplateService;
+using Application.Services.RealVoiceProjects;
+using Application.Services.UsageRights;
+using Application.Services.Blogs;
+using Application.Services.BlogCategories;
+using Application.Services.FileHelperService;
+using Domain.DTO;
+using Microsoft.Extensions.Configuration;
 
 namespace Application;
 
@@ -68,13 +76,18 @@ public static class ApplicationServiceRegistration
         services.AddYamlResourceLocalization();
 
         services.AddSecurityServices<Guid, int, Guid>(tokenOptions);
-
+        services.AddScoped<IFileHelperService, FileHelperManager>();
         services.AddScoped<IArtistService, ArtistManager>();
         services.AddScoped<ICategoryService, CategoryManager>();
         services.AddScoped<IDemoService, DemoManager>();
         services.AddScoped<ILanguageService, LanguageManager>();
         services.AddScoped<IToneCategoryService, ToneCategoryManager>();
-        services.AddScoped<IGenderPsaService, GenderPsaManager>();
+        services.AddScoped<IAiVoiceProjectService, AiVoiceProjectManager>();
+        services.AddScoped<IEmailTemplateService, EmailTemplateManager>();
+        services.AddScoped<IRealVoiceProjectService, RealVoiceProjectManager>();
+        services.AddScoped<IUsageRightService, UsageRightManager>();
+        services.AddScoped<IBlogService, BlogManager>();
+        services.AddScoped<IBlogCategoryService, BlogCategoryManager>();
         return services;
     }
 

@@ -30,4 +30,6 @@ public interface IArtistService
     Task<Artist> DeleteAsync(Artist artist, bool permanent = false);
 
     ICollection<Guid> GetIdsFromCollection<T>(ICollection<T> collection) where T : Entity<Guid>;
+
+    public Task ArtistShouldExistWhenSelected(Artist? artist);
 }

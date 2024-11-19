@@ -10,6 +10,7 @@ public class UpdateLanguageCommand : IRequest<UpdatedLanguageResponse>
 {
     public Guid Id { get; set; }
     public required string Name { get; set; }
+    public required string LanguageCode { get; set; }
 
     public class UpdateLanguageCommandHandler : IRequestHandler<UpdateLanguageCommand, UpdatedLanguageResponse>
     {
@@ -31,7 +32,7 @@ public class UpdateLanguageCommand : IRequest<UpdatedLanguageResponse>
             await _languageBusinessRules.LanguageShouldExistWhenSelected(language);
             language = _mapper.Map(request, language);
 
-            await _languageRepository.UpdateAsync(language!);
+            await _languageRepository.UpdateAsync(language!, cancellationToken);
 
             UpdatedLanguageResponse response = _mapper.Map<UpdatedLanguageResponse>(language);
             return response;

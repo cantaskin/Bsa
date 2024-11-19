@@ -27,7 +27,11 @@ public static class PersistenceServiceRegistration
         services.AddScoped<IDemoRepository, DemoRepository>();
         services.AddScoped<ILanguageRepository, LanguageRepository>();
         services.AddScoped<IToneCategoryRepository, ToneCategoryRepository>();
-        services.AddScoped<IGenderPsaRepository, GenderPsaRepository>();
+        services.AddScoped<IAiVoiceProjectRepository, AiVoiceProjectRepository>();
+        services.AddScoped<IRealVoiceProjectRepository, RealVoiceProjectRepository>();
+        services.AddScoped<IUsageRightRepository, UsageRightRepository>();
+        services.AddScoped<IBlogRepository, BlogRepository>();
+        services.AddScoped<IBlogCategoryRepository, BlogCategoryRepository>();
         return services;
     }
 }

@@ -85,4 +85,10 @@ public class ArtistManager : IArtistService
         }
         return ids;
     }
+
+    public async Task ArtistShouldExistWhenSelected(Artist? artist)
+    {
+        if (artist == null)
+            await _artistBusinessRules.ArtistShouldExistWhenSelected(artist);
+    }
 }

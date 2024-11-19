@@ -19,7 +19,12 @@ public class BaseDbContext : DbContext
     public DbSet<Demo> Demoes { get; set; }
     public DbSet<Language> Languages { get; set; }
     public DbSet<ToneCategory> ToneCategories { get; set; }
-    public DbSet<GenderPsa> GenderPsas { get; set; }
+    public DbSet<AiVoiceProject> AiVoiceProjects { get; set; }
+    public DbSet<ArtistUsageRight> ArtistUsageRights { get; set; }
+    public DbSet<RealVoiceProject> RealVoiceProjects { get; set; }
+    public DbSet<UsageRight> UsageRights { get; set; }
+    public DbSet<Blog> Blogs { get; set; }
+    public DbSet<BlogCategory> BlogCategories { get; set; }
 
     public BaseDbContext(DbContextOptions dbContextOptions, IConfiguration configuration)
         : base(dbContextOptions)
